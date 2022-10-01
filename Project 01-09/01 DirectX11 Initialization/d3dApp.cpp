@@ -444,7 +444,6 @@ bool D3DApp::InitDirect3D()
     // 查看该对象是否包含IDXGIFactory2接口
     hr = dxgiFactory1.As(&dxgiFactory2);
     // 如果包含，则说明支持D3D11.1
-    if (dxgiFactory2 != nullptr)
     {
         HR(m_pd3dDevice.As(&m_pd3dDevice1));
         HR(m_pd3dImmediateContext.As(&m_pd3dImmediateContext1));
@@ -454,17 +453,8 @@ bool D3DApp::InitDirect3D()
         sd.Width = m_ClientWidth;
         sd.Height = m_ClientHeight;
         sd.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-        // 是否开启4倍多重采样？
-        if (m_Enable4xMsaa)
-        {
-            sd.SampleDesc.Count = 4;
-            sd.SampleDesc.Quality = m_4xMsaaQuality - 1;
-        }
-        else
-        {
             sd.SampleDesc.Count = 1;
             sd.SampleDesc.Quality = 0;
-        }
         sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
         sd.BufferCount = 2;
         sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
@@ -480,39 +470,6 @@ bool D3DApp::InitDirect3D()
         HR(dxgiFactory2->CreateSwapChainForHwnd(m_pd3dDevice.Get(), m_hMainWnd, &sd, &fd, nullptr, m_pSwapChain1.GetAddressOf()));
         HR(m_pSwapChain1.As(&m_pSwapChain));
     }
-    else
-    {
-        // 填充DXGI_SWAP_CHAIN_DESC用以描述交换链
-        DXGI_SWAP_CHAIN_DESC sd;
-        ZeroMemory(&sd, sizeof(sd));
-        sd.BufferDesc.Width = m_ClientWidth;
-        sd.BufferDesc.Height = m_ClientHeight;
-        sd.BufferDesc.RefreshRate.Numerator = 60;
-        sd.BufferDesc.RefreshRate.Denominator = 1;
-        sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-        sd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
-        sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
-        // 是否开启4倍多重采样？
-        if (m_Enable4xMsaa)
-        {
-            sd.SampleDesc.Count = 4;
-            sd.SampleDesc.Quality = m_4xMsaaQuality - 1;
-        }
-        else
-        {
-            sd.SampleDesc.Count = 1;
-            sd.SampleDesc.Quality = 0;
-        }
-        sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-        sd.BufferCount = 1;
-        sd.OutputWindow = m_hMainWnd;
-        sd.Windowed = TRUE;
-        sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-        sd.Flags = 0;
-        HR(dxgiFactory1->CreateSwapChain(m_pd3dDevice.Get(), &sd, m_pSwapChain.GetAddressOf()));
-    }
-
-    
 
     // 可以禁止alt+enter全屏
     dxgiFactory1->MakeWindowAssociation(m_hMainWnd, DXGI_MWA_NO_ALT_ENTER | DXGI_MWA_NO_WINDOW_CHANGES);
