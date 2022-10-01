@@ -1,12 +1,16 @@
 # DirectX11 With Windows SDK教程演示项目
 
-![](https://img.shields.io/badge/license-MIT-dddd00.svg) [![](https://img.shields.io/badge/Ver-2.38.1-519dd9.svg)](https://github.com/MKXJun/DirectX11-With-Windows-SDK/blob/master/MarkdownFiles/Updates/Updates.md)
+![](https://img.shields.io/badge/license-MIT-dddd00.svg) [![](https://img.shields.io/badge/Ver-2.38.3-519dd9.svg)](https://github.com/MKXJun/DirectX11-With-Windows-SDK/blob/master/MarkdownFiles/Updates/Updates.md)
 
 **现代DX11系列教程：使用Windows SDK(C++)开发Direct3D 11.x**
 
 ![000](MarkdownFiles/000.png)
 
->  **注意：2.x.x和1.x.x的主要区别在于19章之后的代码有大幅修改。**
+>  **注意：**
+>
+>  - **2.x.x和1.x.x的主要区别在于19章之后的代码有大幅修改。**
+>  - **若更新项目后渲染显示有问题，尝试删除Shaders/Cache文件夹**
+>
 
 ## 博客教程
 
@@ -78,9 +82,8 @@
 
 ## 最近更新
 
-2022/6/24 Ver2.38.1
+2022/9/3 Ver2.38.3
 
-- 修复ImGui使用过时方式的键盘事件监测
-- 将剩余tab替换成空格
+- 调整d3dFormat.h
 
 **[历史更新记录](MarkdownFiles/Updates/Updates.md)**
