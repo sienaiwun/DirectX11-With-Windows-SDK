@@ -39,7 +39,7 @@ D3DApp::D3DApp(HINSTANCE hInstance, const std::wstring& windowName, int initWidt
     m_Minimized(false),
     m_Maximized(false),
     m_Resizing(false),
-    m_Enable4xMsaa(true),
+    m_Enable4xMsaa(false),
     m_4xMsaaQuality(0),
     m_pd3dDevice(nullptr),
     m_pd3dImmediateContext(nullptr),
@@ -142,7 +142,7 @@ void D3DApp::OnResize()
 
     // 重设交换链并且重新创建渲染目标视图
     ComPtr<ID3D11Texture2D> backBuffer;
-    HR(m_pSwapChain->ResizeBuffers(1, m_ClientWidth, m_ClientHeight, DXGI_FORMAT_R8G8B8A8_UNORM, 0));
+    HR(m_pSwapChain->ResizeBuffers(2, m_ClientWidth, m_ClientHeight, DXGI_FORMAT_R8G8B8A8_UNORM, 0));
     HR(m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(backBuffer.GetAddressOf())));
     HR(m_pd3dDevice->CreateRenderTargetView(backBuffer.Get(), nullptr, m_pRenderTargetView.GetAddressOf()));
     
@@ -466,8 +466,8 @@ bool D3DApp::InitDirect3D()
             sd.SampleDesc.Quality = 0;
         }
         sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-        sd.BufferCount = 1;
-        sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+        sd.BufferCount = 2;
+        sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
         sd.Flags = 0;
 
         DXGI_SWAP_CHAIN_FULLSCREEN_DESC fd;
